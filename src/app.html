@@ -1,0 +1,29 @@
+<template>
+	<require from="./index.css"></require>
+	<main>
+		<h1>Waterjug challenge</h1>
+		<form submit.trigger="onSubmit()">
+			<label>
+				Capacity of first bucket
+				<input type="number" value.bind="values.x" name="x" />
+			</label>
+			<label>
+				Capacity of second bucket
+				<input type="number" value.bind="values.y" name="y" />
+			</label>
+			<label>
+				Desired measure
+				<input type="number" name="z" value.bind="values.z" />
+			</label>
+			<button>Calculate</button>
+		</form>
+		<p show.bind="noSolution">
+			No solution
+		</p>
+		<ol>
+			<li repeat.for="measure of measures">
+				Jug 1 ${measure[0]} - Jug 2 ${measure[1]}
+			</li>
+		</ol>
+	</main>
+</template>

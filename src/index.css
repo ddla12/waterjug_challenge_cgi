@@ -1,0 +1,15 @@
+h1 {
+	text-align: center;
+}
+
+form {
+	display: grid;
+	max-width: 24rem;
+	margin: auto;
+	row-gap: 1rem;
+
+	label {
+		display: flex;
+		flex-direction: column;
+	}
+}
