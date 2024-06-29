@@ -1,15 +1,16 @@
 <template>
 	<require from="./index.css"></require>
+	<require from="./resources/elements/app-jug"></require>
 	<main>
 		<h1>Waterjug challenge</h1>
 		<form submit.trigger="onSubmit()">
 			<label>
 				Capacity of first bucket
-				<input type="number" value.bind="values.x" name="x" />
+				<input type="number" min="0" value.bind="values.x" name="x" />
 			</label>
 			<label>
 				Capacity of second bucket
-				<input type="number" value.bind="values.y" name="y" />
+				<input type="number" min="0" value.bind="values.y" name="y" />
 			</label>
 			<label>
 				Desired measure
@@ -17,13 +18,18 @@
 			</label>
 			<button>Calculate</button>
 		</form>
-		<p show.bind="noSolution">
-			No solution
-		</p>
-		<ol>
-			<li repeat.for="measure of measures">
-				Jug 1 ${measure[0]} - Jug 2 ${measure[1]}
-			</li>
-		</ol>
+		<section class="results">
+			<app-jug capacity.bind="values.x" current-level.bind="lastMeasure[0]"></app-jug>
+			<p show.bind="noSolution">
+				No solution
+			</p>
+			<ol show.bind="!noSolution">
+				<li repeat.for="measure of measures">
+					${measure[0]} - ${measure[1]}
+				</li>
+			</ol>
+			<app-jug capacity.bind="values.y" current-level.bind="lastMeasure[1]"></app-jug>
+		</section>
+
 	</main>
 </template>

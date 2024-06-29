@@ -1,15 +1,63 @@
+body {
+	background-color: #2c70de;
+	color: white;
+}
+
+main {
+	max-width: 32rem;
+	margin: auto;
+}
+
 h1 {
 	text-align: center;
 }
 
 form {
 	display: grid;
-	max-width: 24rem;
-	margin: auto;
 	row-gap: 1rem;
+	padding: 1rem;
 
 	label {
 		display: flex;
 		flex-direction: column;
+		font-weight: bold;
+	}
+}
+
+.results {
+	display: flex;
+	justify-content: space-between;
+	padding: 2rem 1rem;
+	margin-top: 3rem;
+
+	p {
+		text-align: center;
+	}
+}
+
+.jug {
+	position: relative;
+	width: 7rem;
+	height: 10rem;
+	border: 1px solid black;
+	border-radius: 20% 20% 10% 10%;
+
+	&:before {
+		position: absolute;
+		content: "";
+		width: 2.5rem;
+		height: 3rem;
+		background-color: white;
+		border: 1px solid black;
+		border-bottom: none; 
+		border-radius: 20% 20% 0% 0%;
+		left: 32%;
+		top: -30%;
+	}
+}
+
+@media screen and (max-width: 450px) {
+	.jug {
+		display: none;
 	}
 }

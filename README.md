@@ -1,33 +1,20 @@
 # `waterjug_challenge`
 
-This project is bootstrapped by [aurelia-cli](https://github.com/aurelia/cli).
+### This is a version of the water jug challenge built on Aurelia.js
 
-For more information, go to https://aurelia.io/docs/cli/webpack
+It consists of a single html view with a form and 3 inputs (`x, y, z` respectively) on the top. When the form is submitted the bottom part fills with the corresponding steps required to measure `z`.
 
-## Run dev app
+Regarding the algorithm used to solve the problem I must say I couldn't make one algorithm for all cases. I'd like to point out that I did a little research because I needed better constraints for the algorithm. I found out two additional constraints:
 
-Run `npm start`, then open `http://localhost:8080`
+`z < x + y`
+`z % GCD(x, y) = 0`
 
-You can change the standard webpack configurations from CLI easily with something like this: `npm start -- --open --port 8888`. However, it is better to change the respective npm scripts or `webpack.config.js` with these options, as per your need.
+Which perfectly fit with the constraints defined in the document: {x, y, z} must be natural numbers
 
-To enable Webpack Bundle Analyzer, do `npm run analyze` (production build).
+Concerning the solution to the problem itself, I made a heuristic solution. Actually 2 solutions, if `z` is less than half of the capacity of the two jugs combined, then we use the 'smaller jug solution' which is basically a procedural addition to the bigger jug. On the contrary, the 'bigger jug solution' is a procedural substraction to the bigger jug.
 
-To enable hot module reload, do `npm start -- --hmr`.
+### Run
+To run the program run `au run --open` on the root directory
 
-To change dev server port, do `npm start -- --port 8888`.
-
-To change dev server host, do `npm start -- --host 127.0.0.1`
-
-**PS:** You could mix all the flags as well, `npm start -- --host 127.0.0.1 --port 7070 --open --hmr`
-
-For long time aurelia-cli user, you can still use `au run` with those arguments like `au run --env prod --open --hmr`. But `au run` now simply executes `npm start` command.
-
-## Build for production
-
-Run `npm run build`, or the old way `au build --env prod`.
-
-## Unit tests
-
-Run `au test` (or `au jest`).
-
-To run in watch mode, `au test --watch` or `au jest --watch`.
+### Test
+To test program run `au test`

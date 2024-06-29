@@ -1,6 +1,8 @@
-import { JugMeasure, measure } from "./Jug";
+import { computedFrom } from "aurelia-framework";
+import { JugMeasure, measure, } from "./Jug";
 
 const TIMER = 1_000;
+const DEFAULT = [0, 0];
 let interval: number;
 
 export class App {
@@ -12,16 +14,26 @@ export class App {
 	};
 	noSolution: boolean = false;
 
+	@computedFrom('measures.length')
+	get lastMeasure() {
+		console.log(this.measures);
+		return this.measures.at(-1) || DEFAULT;
+	}
+
 	onSubmit(e: SubmitEvent) {
+		window.clearInterval(interval);
+
 		this.measures = [];
 		this.noSolution = false;
+
+		// We fetch the measures one by one every TIMER seconds
 		const iter = measure(+this.values.x, +this.values.y, +this.values.z);
 
 		interval = window.setInterval(() => {
 			const cur = iter.next();
 
 			if (cur.done) {
-				clearInterval(interval);
+				window.clearInterval(interval);
 			} else {
 				(cur.value[0] === -1)
 					? (this.noSolution = true)

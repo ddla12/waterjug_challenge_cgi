@@ -9,7 +9,7 @@ export class Jug {
 		return this.gallons === this.capacity;
 	}
 
-	protected get isEmpty() {
+	get isEmpty() {
 		return this.gallons === 0;
 	}
 
@@ -35,8 +35,17 @@ export class Jug {
 
 export type JugMeasure = [number, number];
 
+function gcd(x: number, y: number) {
+	if(!y)
+		return x;
+
+	return gcd(y, x % y);
+}
+
+// Because I'm using an endless loop it is better to use a generator (also from UI purposes)
 export function *measure(x: number, y: number, z: number): Generator<JugMeasure> {
-	if (((x + y) / z) % 1 !== 0) {
+	// https://www.interviewbit.com/blog/water-jug-problem/#mathematical-approach
+	if ([x, y, z].some((i) => i < 0) || (x + y) <= z || z % gcd(x, y) !== 0) {
 		yield [-1, -1];
 		return;
 	}
@@ -45,7 +54,8 @@ export function *measure(x: number, y: number, z: number): Generator<JugMeasure>
 	const [bigger, smaller] = [new Jug(max), new Jug(min)];
 	const tuple = (): JugMeasure => [smaller.gallons, bigger.gallons];
 
-	if (z <= (max + min) / 2) {
+	// If z is less than half of the full capacity we take the smaller jug approach
+	if (z < (max + min) / 2) {
 		while(1) {
 			smaller.fill();
 
@@ -58,7 +68,7 @@ export function *measure(x: number, y: number, z: number): Generator<JugMeasure>
 
 			yield tuple();
 
-			if(bigger.gallons === z)
+			if(bigger.gallons === z || smaller.gallons === z)
 				break;
 
 			smaller.empty();
@@ -79,7 +89,9 @@ export function *measure(x: number, y: number, z: number): Generator<JugMeasure>
 			if(bigger.gallons === z || smaller.gallons === z)
 				break;
 
-			smaller.empty();
+			(bigger.isEmpty)
+				? bigger.fill()
+				: smaller.empty();
 		}
 	}
 }
